@@ -11,8 +11,7 @@ mysql_setup:
       - pkg: debconf-utils
 
 python-mysqldb:
-  pkg:
-    - installed
+  pkg.installed
 
 mysql-server:
   pkg:
@@ -31,9 +30,42 @@ mysql:
 /etc/mysql/my.cnf:
   file:
     - managed
-    - source: salt://mysql/my.cnf
+    - source: salt://mysql/my.cnf.jinja
+    - template: jinja
     - user: root
     - group: root
     - mode: 640
     - require:
       - pkg: mysql-server
+
+/etc/salt/minion.d/mysql.conf:
+  file:
+    - managed
+    - source: salt://mysql/mysql.conf
+    - user: root
+    - group: root
+    - mode: 640
+    - require:
+      - service: mysql
+
+/etc/mysql/salt.cnf:
+  file:
+    - managed
+    - source: salt://mysql/salt.cnf.jinja
+    - template: jinja
+    - user: root
+    - group: root
+    - mode: 640
+    - require:
+      - service: mysql
+
+restart_minion_for_mysql:
+  service:
+    - running
+    - name: salt-minion
+    - watch:
+      - file: /etc/salt/minion.d/mysql.conf
+
+
+include:
+  - .databases

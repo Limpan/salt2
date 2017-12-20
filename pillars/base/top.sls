@@ -1,0 +1,4 @@
+base:
+  'db*':
+    - mysql
+    - users
