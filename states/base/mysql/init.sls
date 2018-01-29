@@ -16,6 +16,7 @@ python-mysqldb:
 mysql-server:
   pkg:
     - installed
+    - version: '5.6*'
     - require:
       - debconf: mysql-server
       - pkg: python-mysqldb
@@ -30,7 +31,7 @@ mysql:
 /etc/mysql/my.cnf:
   file:
     - managed
-    - source: salt://mysql/my.cnf.jinja
+    - source: salt://mysql/files/my.cnf.jinja
     - template: jinja
     - user: root
     - group: root
@@ -41,7 +42,7 @@ mysql:
 /etc/salt/minion.d/mysql.conf:
   file:
     - managed
-    - source: salt://mysql/mysql.conf
+    - source: salt://mysql/files/mysql.conf
     - user: root
     - group: root
     - mode: 640
@@ -51,7 +52,7 @@ mysql:
 /etc/mysql/salt.cnf:
   file:
     - managed
-    - source: salt://mysql/salt.cnf.jinja
+    - source: salt://mysql/files/salt.cnf.jinja
     - template: jinja
     - user: root
     - group: root

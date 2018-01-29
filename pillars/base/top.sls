@@ -1,4 +1,6 @@
 base:
   'db*':
-    - mysql
+    - postgres
     - users
+  'auth*':
+    - freeradius

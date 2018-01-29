@@ -1,5 +1,7 @@
 base:
-  'auth':
+  '*':
+    - base
+  'auth*':
     - radius
   'proxy':
     - nginx
@@ -9,4 +11,4 @@ base:
     - letsencrypt
   'db*':
     - users
-    - mysql
+    - postgresql
